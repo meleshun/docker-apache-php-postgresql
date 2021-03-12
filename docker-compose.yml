@@ -1,0 +1,25 @@
+version: '3.2'
+services:
+  webserver:
+    build: ./
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - ./app:/var/www/html
+      - ./etc/php/php.ini:/usr/local/etc/php/php.ini
+      - ./etc/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+  db:
+    image: postgres:latest
+    restart: always
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=example
+      - POSTGRES_USER=example
+      - POSTGRES_PASSWORD=example
+  adminer:
+    image: adminer:latest
+    restart: always
+    ports:
+      - 8080:8080
